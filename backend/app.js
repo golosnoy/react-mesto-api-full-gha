@@ -15,7 +15,7 @@ const login = require('./controllers/login');
 const { createUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 
-const { PORT } = process.env;
+const { PORT, DB_HOST } = process.env;
 
 const app = express();
 
@@ -72,7 +72,7 @@ app.use(usersRouter);
 
 app.use(cardsRouter);
 
-mongoose.connect(process.env.DB_HOST, {
+mongoose.connect(DB_HOST, {
   useNewUrlParser: true,
 });
 
