@@ -7,10 +7,9 @@ const { errors } = require('celebrate');
 const cookieParser = require('cookie-parser');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const errorHandler = require('./middlewares/errorHandler');
-const urlPattern = require('./utils/constants');
 const allowedCors = require('./utils/allowedCors');
 const usersRouter = require('./routes/users');
-const cardsRouter = require('./routes/cards');
+const moviesRouter = require('./routes/movies');
 const login = require('./controllers/login');
 const { createUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
@@ -61,8 +60,6 @@ app.post('/signup', celebrate({
     email: Joi.string().required().email(),
     password: Joi.string().required().min(8),
     name: Joi.string().min(2).max(30),
-    avatar: Joi.string().pattern(urlPattern),
-    about: Joi.string().min(2).max(30),
   }),
 }), createUser);
 
@@ -70,7 +67,7 @@ app.use(auth);
 
 app.use(usersRouter);
 
-app.use(cardsRouter);
+app.use(moviesRouter);
 
 mongoose.connect('mongodb://127.0.0.1:27017/mestodb');
 
