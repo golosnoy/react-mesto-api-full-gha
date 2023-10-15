@@ -64,7 +64,7 @@ const movieSchema = new mongoose.Schema({
   },
   movieId: {
     type: Number,
-    required: true,
+    required: [true, 'Поле movieId должно быть заполнено'],
   },
 });
 

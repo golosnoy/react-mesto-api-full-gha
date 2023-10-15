@@ -1,16 +1,16 @@
-[![Tests](https://github.com/golosnoy/express-mesto-gha/actions/workflows/tests-13-sprint.yml/badge.svg)](https://github.com/golosnoy/express-mesto-gha/actions/workflows/tests-13-sprint.yml) [![Tests](https://github.com/golosnoy/express-mesto-gha/actions/workflows/tests-14-sprint.yml/badge.svg)](https://github.com/golosnoy/express-mesto-gha/actions/workflows/tests-14-sprint.yml)
-# Проект Mesto фронтенд + бэкенд
+[![Статус тестов](../../actions/workflows/tests.yml/badge.svg)](../../actions/workflows/tests.yml)
 
-
-## Директории
-
-`/routes` — папка с файлами роутера  
-`/controllers` — папка с файлами контроллеров пользователя и карточки   
-`/models` — папка с файлами описания схем пользователя и карточки  
+# movies-explorer-api
+Репозиторий для дипломной работы, включающий бэкенд приложения. 
   
-Остальные директории вспомогательные, создаются при необходимости разработчиком
+Пожалуйста, прикрепите в это описание ссылку на сайт, размещенный на Яндекс.Облаке.
 
-## Запуск проекта
+Адрес репозитория: https://github.com/golosnoy/movies-explorer-api.git
 
-`npm run start` — запускает сервер   
-`npm run dev` — запускает сервер с hot-reload
+## Ссылки на проект
+
+IP-адрес 158.160.83.59
+
+Frontend https://golosnoy.nomoredomainsrocks.ru
+
+Backend https://api.golosnoy.nomoredomainsrocks.ru

@@ -43,11 +43,15 @@ const createUser = (req, res, next) => {
   bcrypt.hash(req.body.password, 10)
     .then((hash) => User.create({
       name: req.body.name,
+      about: req.body.about,
+      avatar: req.body.avatar,
       email: req.body.email,
       password: hash,
     }))
     .then((user) => res.status(201).send({
       name: user.name,
+      about: user.about,
+      avatar: user.avatar,
       email: user.email,
     }))
     // eslint-disable-next-line consistent-return
@@ -63,7 +67,7 @@ const createUser = (req, res, next) => {
 const updateProfile = (req, res, next) => User.findByIdAndUpdate(req.user._id, {
   $set: {
     name: req.body.name,
-    email: req.body.email,
+    about: req.body.about,
   },
 }, {
   returnDocument: 'after',
@@ -77,16 +81,26 @@ const updateProfile = (req, res, next) => User.findByIdAndUpdate(req.user._id, {
     }
     const {
       name,
-      email,
+      about,
     } = user;
     res.status(200).send({
       name,
-      email,
+      about,
     });
   })
   .catch((err) => {
     next(err);
   });
+
+const updateAvatar = (req, res, next) => User.findByIdAndUpdate(req.user._id, {
+  $set: {
+    avatar: req.body.avatar,
+  },
+}, {
+  returnDocument: 'after',
+})
+  .then((user) => res.status(200).send(user))
+  .catch(next);
 
 const getCurrentUser = (req, res, next) => User.findById(req.user._id)
   .orFail(new NotFoundError('Id not found'))
@@ -96,5 +110,5 @@ const getCurrentUser = (req, res, next) => User.findById(req.user._id)
   });
 
 module.exports = {
-  getUsers, getUserById, createUser, updateProfile, getCurrentUser,
+  getUsers, getUserById, createUser, updateProfile, updateAvatar, getCurrentUser,
 };

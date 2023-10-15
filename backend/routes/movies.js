@@ -28,14 +28,14 @@ router.post('/movies', celebrate({
     nameEN: Joi.string().required(),
     country: Joi.string().required(),
     director: Joi.string().required(),
-    duration: Joi.string().required(),
+    duration: Joi.number().required(),
     year: Joi.string().required(),
     description: Joi.string().required(),
     image: Joi.string().required().pattern(urlPattern),
     trailerLink: Joi.string().required().pattern(urlPattern),
     thumbnail: Joi.string().required().pattern(urlPattern),
     owner: Joi.string().required().alphanum().length(24),
-    movieId: Joi.number().required().length(24),
+    movieId: Joi.number().required(),
   }),
 }), createMovie);
 

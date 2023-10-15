@@ -14,7 +14,7 @@ const isValidId = (id) => {
   return false;
 };
 
-const getMovies = (req, res, next) => Movie.find()
+const getMovies = (req, res, next) => Movie.find({ owner: req.user._id })
   .then((movies) => res.status(200).send(movies))
   .catch(next);
 

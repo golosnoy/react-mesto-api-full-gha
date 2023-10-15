@@ -9,7 +9,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const errorHandler = require('./middlewares/errorHandler');
 const allowedCors = require('./utils/allowedCors');
 const usersRouter = require('./routes/users');
-const moviesRouter = require('./routes/movies');
+const cardsRouter = require('./routes/movies');
 const login = require('./controllers/login');
 const { createUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
@@ -67,7 +67,7 @@ app.use(auth);
 
 app.use(usersRouter);
 
-app.use(moviesRouter);
+app.use(cardsRouter);
 
 mongoose.connect('mongodb://127.0.0.1:27017/mestodb');
 
