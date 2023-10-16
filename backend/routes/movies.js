@@ -35,7 +35,6 @@ router.post('/movies', celebrate({
     trailerLink: Joi.string().required().pattern(urlPattern),
     thumbnail: Joi.string().required().pattern(urlPattern),
     owner: Joi.string().required().alphanum().length(24),
-    movieId: Joi.number().required(),
   }),
 }), createMovie);
 

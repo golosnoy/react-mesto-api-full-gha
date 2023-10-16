@@ -14,7 +14,7 @@ const login = require('./controllers/login');
 const { createUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 
-// const { PORT, DB_HOST } = process.env;
+const { NODE_ENV, PORT, DB_HOST } = process.env;
 
 const app = express();
 
@@ -28,7 +28,6 @@ app.use((req, res, next) => {
   }
   const requestHeaders = req.headers['access-control-request-headers'];
   if (method === 'OPTIONS') {
-    // разрешаем кросс-доменные запросы любых типов (по умолчанию)
     res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);
     res.header('Access-Control-Allow-Headers', requestHeaders);
     return res.end();
@@ -69,7 +68,7 @@ app.use(usersRouter);
 
 app.use(cardsRouter);
 
-mongoose.connect('mongodb://127.0.0.1:27017/mestodb');
+mongoose.connect(NODE_ENV === 'production' ? DB_HOST : 'mongodb://127.0.0.1:27017/mestodb');
 
 app.use(errorLogger);
 
@@ -77,4 +76,4 @@ app.use(errors());
 
 app.use(errorHandler);
 
-app.listen(3000);
+app.listen(NODE_ENV === 'production' ? PORT : 3000);
