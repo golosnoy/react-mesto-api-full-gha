@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-
 const validator = require('validator');
+const { notValidURLMessage } = require('../utils/constants');
 
 const { ObjectId } = mongoose.Schema.Types;
 
@@ -38,7 +38,7 @@ const movieSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: (value) => validator.isURL(value),
-      message: '{VALUE} is not a valid URL',
+      message: notValidURLMessage,
     },
   },
   trailerLink: {
@@ -46,7 +46,7 @@ const movieSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: (value) => validator.isURL(value),
-      message: '{VALUE} is not a valid URL',
+      message: notValidURLMessage,
     },
   },
   thumbnail: {
@@ -54,7 +54,7 @@ const movieSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: (value) => validator.isURL(value),
-      message: '{VALUE} is not a valid URL',
+      message: notValidURLMessage,
     },
   },
   owner: {
@@ -64,7 +64,7 @@ const movieSchema = new mongoose.Schema({
   },
   movieId: {
     type: Number,
-    required: [true, 'Поле movieId должно быть заполнено'],
+    required: true,
   },
 });
 

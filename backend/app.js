@@ -1,22 +1,24 @@
 require('dotenv').config();
 const express = require('express');
+const helmet = require('helmet');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const { celebrate, Joi } = require('celebrate');
 const { errors } = require('celebrate');
 const cookieParser = require('cookie-parser');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const errorHandler = require('./middlewares/errorHandler');
 const allowedCors = require('./utils/allowedCors');
-const usersRouter = require('./routes/users');
-const cardsRouter = require('./routes/movies');
+const indexRouter = require('./routes/index');
 const login = require('./controllers/login');
 const { createUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
-
-const { NODE_ENV, PORT, DB_HOST } = process.env;
+const { crashMessage } = require('./utils/constants');
+const { loginValidate, registerValidate } = require('./middlewares/validate');
+const { ENV_PORT, DB_HOST } = require('./utils/config');
 
 const app = express();
+
+app.use(helmet());
 
 // eslint-disable-next-line consistent-return
 app.use((req, res, next) => {
@@ -43,32 +45,18 @@ app.use(requestLogger);
 
 app.get('/crash-test', () => {
   setTimeout(() => {
-    throw new Error('Сервер сейчас упадёт');
+    throw new Error(crashMessage);
   }, 0);
 });
 
-app.post('/signin', celebrate({
-  body: Joi.object().keys({
-    email: Joi.string().required().email(),
-    password: Joi.string().required().min(8),
-  }),
-}), login);
+app.post('/signin', loginValidate, login);
 
-app.post('/signup', celebrate({
-  body: Joi.object().keys({
-    email: Joi.string().required().email(),
-    password: Joi.string().required().min(8),
-    name: Joi.string().min(2).max(30),
-  }),
-}), createUser);
+app.post('/signup', registerValidate, createUser);
 
 app.use(auth);
+app.use(indexRouter);
 
-app.use(usersRouter);
-
-app.use(cardsRouter);
-
-mongoose.connect(NODE_ENV === 'production' ? DB_HOST : 'mongodb://127.0.0.1:27017/mestodb');
+mongoose.connect(DB_HOST);
 
 app.use(errorLogger);
 
@@ -76,4 +64,4 @@ app.use(errors());
 
 app.use(errorHandler);
 
-app.listen(NODE_ENV === 'production' ? PORT : 3000);
+app.listen(ENV_PORT);
